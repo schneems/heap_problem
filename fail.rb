@@ -8,6 +8,10 @@ FileUtils.mkdir_p("tmp")
 
 ObjectSpace.trace_object_allocations_start
 
+def wash_stack(n=100)
+  1.times { wash_stack(n-1) if n > 0 }
+end
+
 def run
   string = "i am a string #{rand(0..100)}"
   $address = "0x#{ (string.object_id << 1).to_s(16) }"
@@ -24,6 +28,7 @@ run
 
 # ===== CALLING GC HERE =====
 
+wash_stack
 GC.start
 
 # ===========================
